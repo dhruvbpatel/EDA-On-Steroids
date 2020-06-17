@@ -5,12 +5,13 @@ import matplotlib
 import numpy as np
 import sklearn
 import pandas as pd
+import seaborn as sns
 
 
 ## main func
 def main():
     # st.title("EDA on the GO")
-    st.sidebar.title("Task")
+    st.sidebar.title("Select Task")
 
     html_header="""
     <div style ="background-color:tomato;padding:10px">
@@ -19,11 +20,14 @@ def main():
     """
     st.markdown(html_header,unsafe_allow_html=True)
 
-    option =["EDA","Plots","Train"]
+    option =["EDA","Data Visualization","Train Model"]
     choice=st.sidebar.selectbox("Select Task",option)
     st.subheader("Exploratory Data Analysis")
 
     data = st.file_uploader("Upload Data here (CSV file only)",type=['csv'])
+    
+    
+
     ## EDA 
     if choice=='EDA':
         
@@ -31,6 +35,8 @@ def main():
         if data is not None:
             df=pd.read_csv(data)
             col_list = df.columns.to_list()
+
+
             if st.checkbox("Show raw data", False):
                 
                 if data is not None:
@@ -53,13 +59,31 @@ def main():
             st.write("Columns")
             st.write(df.columns.to_list())
 
-            st.selectbox("columns",df.columns.to_list())
+            # st.selectbox("columns",df.columns.to_list())
             
-            
-    if choice=='Plots':
+    if choice == 'Data Visualization':
+        df = pd.read_csv(data)
+        col_list = df.columns.to_list()
         st.subheader("Data Visualization")
-    if choice=='Train':
-        st.subheader("Build the model")
+        corr_option = ["Show Correlation between all Features",
+                        "Show Correlation between among Selected Features"]
+
+        corr_choice=st.selectbox("Select Correlation Plot",corr_option)        
+
+        if corr_choice == "Show Correlation between all Features":
+            st.write(sns.heatmap(df.corr(),annot=True))
+            st.pyplot()
+        if corr_choice == "Show Correlation between among Selected Features":
+            num_col = [col for col in df.columns.to_list() if df[col].dtype != 'object']  ## selecting only numerical cols
+            select_col=st.multiselect("Select columns",num_col)
+            select_col_df = df[select_col]
+
+            st.write(sns.heatmap(select_col_df.corr(),annot=True))
+            st.pyplot()
+
+
+    if choice=='Train Model':
+        st.subheader("Build the model")    
 
     
 if __name__ == '__main__':

@@ -21,25 +21,41 @@ def main():
 
     option =["EDA","Plots","Train"]
     choice=st.sidebar.selectbox("Select Task",option)
+    st.subheader("Exploratory Data Analysis")
 
+    data = st.file_uploader("Upload Data here (CSV file only)",type=['csv'])
     ## EDA 
     if choice=='EDA':
-        st.subheader("Exploratory Data Analysis")
-
-        data = st.file_uploader("Upload Data here (CSV file only)",type=['csv'])
+        
 
         if data is not None:
             df=pd.read_csv(data)
-
+            col_list = df.columns.to_list()
             if st.checkbox("Show raw data", False):
                 
                 if data is not None:
                     st.subheader("RAW DATA")    
                     st.write(df)
+
+            if st.checkbox("Select Columns",False):
+                select_column = st.multiselect("Select Columns",col_list)
+                col_df = df[select_column]
+                st.dataframe(col_df)
+
+
+
+            st.write("Stats")
+            st.write(df.describe())
+
+            st.write("No of Columns:")
+            st.write(len(df.columns))
+
+            st.write("Columns")
+            st.write(df.columns.to_list())
+
+            st.selectbox("columns",df.columns.to_list())
             
-            if st.checkbox("Show info",False):
-                data_info=pd.DataFrame(df.info())
-                st.write(data_info)
+            
     if choice=='Plots':
         st.subheader("Data Visualization")
     if choice=='Train':

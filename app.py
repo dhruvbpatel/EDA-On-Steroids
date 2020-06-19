@@ -13,13 +13,17 @@ import seaborn as sns
 
 def main():
     # st.title("EDA on the GO")
+    
     st.sidebar.title("Select Task")
     
 
     
     html_header="""
+    <head>
+    <title>EDA</title>
+    </head>
     <div style ="background-color:tomato;padding:10px">
-    <h2 style="color:white;text-align:center;">EDA-On-Steroids</h2>
+    <h2 style="color:white;text-align:center;">🔥 EDA-On-Steroids 🔥</h2>
     
     </div>
     """
@@ -29,7 +33,7 @@ def main():
     choice=st.sidebar.selectbox("Select Task",option)
     st.subheader("Exploratory Data Analysis")
 
-    data = st.file_uploader("Upload Data here (CSV file only)",type=['csv'])
+    data = st.file_uploader("Upload Data here (CSV file only)",type=['csv'],encoding='cp1252')
     
 
 
@@ -179,6 +183,7 @@ def main():
             <style>
                         #MainMenu {visibility: hidden;}
                         footer{visibility: hidden;}
+                        title{visibility: hidden;}
             </style>
 
             """

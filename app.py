@@ -12,10 +12,11 @@ import seaborn as sns
 def main():
     # st.title("EDA on the GO")
     st.sidebar.title("Select Task")
-
+    
     html_header="""
     <div style ="background-color:tomato;padding:10px">
-    <h2 style="color:white;text-align:center;">EDA-ON-Steroids</h2>
+    <h2 style="color:white;text-align:center;">EDA-On-Steroids</h2>
+    
     </div>
     """
     st.markdown(html_header,unsafe_allow_html=True)
@@ -25,7 +26,6 @@ def main():
     st.subheader("Exploratory Data Analysis")
 
     data = st.file_uploader("Upload Data here (CSV file only)",type=['csv'])
-    
     
 
     ## EDA 
@@ -47,18 +47,48 @@ def main():
                 select_column = st.multiselect("Select Columns",col_list)
                 col_df = df[select_column]
                 st.dataframe(col_df)
+            
+            if st.checkbox("Show Dataset Statistics",False):
+                st.write("Stats")
+                st.write(df.describe())
+
+                st.write("No of Columns:")
+                st.write(len(df.columns))
+
+                st.write("Columns")
+                st.write(df.columns.to_list())
+
+                st.write("No of Observatios")
+                st.write(len(df))
+
+                st.write("Number of Missing Values")
+                missing_val = df.isnull().sum()
+                missing_val_df = pd.DataFrame(missing_val, columns=["Counts"])
+                st.write(missing_val_df)
+
+                st.write("Missing Cells Percentage")
+                
+                missing_val_sum = missing_val.sum()
+                missing_val_percent = 100*(missing_val_sum)/(df.shape[0]*df.shape[1])
+                st.write(missing_val_percent,"%")
+
+                st.write("Column Category")
+                cat_col = [col for col in df.columns.to_list() if df[col].dtype=='object']
+
+                cat_col_count = len(cat_col)
+                num_col_count = len(df.columns)-cat_col_count
+                num_cat_df = pd.DataFrame({"Categorical Column Count":[cat_col_count],"Numerical Column Count":[num_col_count]},index=["Counts"])
+                st.write(num_cat_df)
+
+                
 
 
 
-            st.write("Stats")
-            st.write(df.describe())
 
-            st.write("No of Columns:")
-            st.write(len(df.columns))
 
-            st.write("Columns")
-            st.write(df.columns.to_list())
 
+
+                
             # st.selectbox("columns",df.columns.to_list())
             
     if choice == 'Data Visualization':

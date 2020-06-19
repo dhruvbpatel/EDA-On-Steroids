@@ -69,6 +69,7 @@ def main():
                 missing_val = df.isnull().sum()
                 missing_val_df = pd.DataFrame(missing_val, columns=["Counts"])
                 st.write("Missing Values Chart")   ## missing value chart
+                
                 st.bar_chart(missing_val_df)
                 st.write("Number of Missing Values")
                 
@@ -93,7 +94,15 @@ def main():
                 col_options = df.columns.to_list()
                 selected_col=st.selectbox("Select Column",col_options)
 
-                st.bar_chart(df[selected_col])
+                if df[selected_col].dtype=='O':
+
+                    ct_plot = sns.countplot(x=selected_col,data=df)
+                    st.pyplot()
+                else:
+                    dst_plot=sns.distplot(df[selected_col],kde=True)
+                    st.pyplot()
+                    
+
 
                 st.write("Statistics for ",selected_col)
                 st.write(df[selected_col].describe())
@@ -136,7 +145,7 @@ def main():
 
             st.write(sns.heatmap(select_col_df.corr(),annot=True))
             st.pyplot()
-
+            st.write("More features to be added soon !!!")
 
     if choice=='Train Model':
         #st.subheader("Build the model")  
@@ -146,7 +155,7 @@ def main():
     
 
 
-    <footer style="margin-top:280px;">
+    <p style="margin-top:280px;">
     Made with 🧡 by <a href="https://github.com/dhruvbpatel">@dhruvhimself</a>
     <br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -161,7 +170,7 @@ def main():
     <a href="https://twitter.com/dhruvhimself" target="_blank">
     <img src="https://img.icons8.com/metro/26/000000/twitter.png"/>
     </a>
-    </footer>
+    </p>
 
     """
     st.sidebar.markdown(footer, unsafe_allow_html=True)
@@ -169,10 +178,7 @@ def main():
     hide_streamlit_style = """
             <style>
                         #MainMenu {visibility: hidden;}
-
-
-                        
-
+                        footer{visibility: hidden;}
             </style>
 
             """

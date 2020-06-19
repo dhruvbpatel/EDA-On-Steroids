@@ -8,7 +8,9 @@ import pandas as pd
 import seaborn as sns
 
 
+
 ## main func
+
 def main():
     # st.title("EDA on the GO")
     st.sidebar.title("Select Task")
@@ -64,9 +66,12 @@ def main():
                 st.write("No of Observatios")
                 st.write(len(df))
 
-                st.write("Number of Missing Values")
                 missing_val = df.isnull().sum()
                 missing_val_df = pd.DataFrame(missing_val, columns=["Counts"])
+                st.write("Missing Values Chart")   ## missing value chart
+                st.bar_chart(missing_val_df)
+                st.write("Number of Missing Values")
+                
                 st.write(missing_val_df)
 
                 st.write("Missing Cells Percentage")
@@ -87,6 +92,8 @@ def main():
             if st.checkbox("Show Individual Column Summary",False):
                 col_options = df.columns.to_list()
                 selected_col=st.selectbox("Select Column",col_options)
+
+                st.bar_chart(df[selected_col])
 
                 st.write("Statistics for ",selected_col)
                 st.write(df[selected_col].describe())

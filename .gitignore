@@ -1,4 +1,9 @@
 ## dont track these folder
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+
 data/
 venv/
 __pycache__/

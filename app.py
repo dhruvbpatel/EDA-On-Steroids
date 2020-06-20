@@ -150,13 +150,19 @@ def main():
     if choice == 'Train Model':
         #st.subheader("Build the model")
         st.subheader("Module will be added soon !!!!")
+    
+    
+    # st.info("""⚠️The WebApp is in development stage and analysis produced may **not be state-of-the-art** and may not be **fully optimized**, I am trying to optimize it in further versions.
+    #        If you are interested in optimizing / adding functionality to this webapp, reach out on github: [EDA-On-Steroids](https://github.com/dhruvbpatel/EDA-On-Steroids).""")
+
+    
 
     footer = """
     
 
 
         <p style="margin-top:280px;">
-        Made with 🧡 by <a href="https://github.com/dhruvbpatel">@dhruvhimself</a>
+        Made with 🧡 by <a href="https://github.com/dhruvbpatel" target="_blank">@dhruvhimself</a>
         <br><br>
     &emsp;
         <a href="https://www.linkedin.com/in/dhruv-patel-1057/" target="_blank">
